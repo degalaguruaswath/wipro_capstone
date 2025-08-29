@@ -1,0 +1,271 @@
+<!-- Hide customer dashboard for employee; show gentle hint -->
+<div *ngIf="(auth.currentUser()?.role||'user')==='user'; else employeeBlock" class="min-vh-100 bg-light">
+  <!-- Top blue header -->
+  <header class="dash-header">
+    <div class="container d-flex align-items-center justify-content-between gap-3">
+      <h1 class="brand m-0">User Dashboard</h1>
+      <div class="d-flex align-items-center gap-3">
+        <span class="welcome">Welcome, {{ auth.currentUser()?.username }}</span>
+        <button class="btn btn-outline-light btn-sm" (click)="auth.logout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Primary quick actions (big pill buttons) -->
+  <section class="container my-3">
+    <div class="row g-3 justify-content-center">
+      <div class="col-12 col-md-3">
+        <a class="pill-btn w-100" routerLink="/loans">Loans</a>
+      </div>
+      <div class="col-12 col-md-3">
+        <a class="pill-btn w-100" routerLink="/insurance">Insurance</a>
+      </div>
+      <div class="col-12 col-md-3">
+        <a class="pill-btn w-100" routerLink="/investments">Investments</a>
+      </div>
+      <div class="col-12 col-md-3">
+        <a class="pill-btn w-100 secondary" routerLink="/my-profile">My Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary tabs for banking operations -->
+  <section class="container">
+    <ul class="op-tabs">
+      <li><button [class.active]="tab==='open'" (click)="setTab('open')">Open Account</button></li>
+      <li><button [class.active]="tab==='deposit'" (click)="setTab('deposit')">Deposit</button></li>
+      <li><button [class.active]="tab==='withdraw'" (click)="setTab('withdraw')">Withdraw</button></li>
+      <li><button [class.active]="tab==='transfer'" (click)="setTab('transfer')">Transfer</button></li>
+      <li><button [class.active]="tab==='accounts'" (click)="setTab('accounts')">Accounts</button></li>
+      <li><button [class.active]="tab==='history'" (click)="setTab('history')">History</button></li>
+    </ul>
+  </section>
+
+  <section class="container pb-5">
+
+    <!-- Open Account -->
+<div *ngIf="tab==='open'" class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">Open Account</h5>
+    <form [formGroup]="openForm" (ngSubmit)="openAccount()" class="row g-3">
+
+      <div class="col-md-6">
+        <label class="form-label">Account Number</label>
+        <input formControlName="accountNumber" class="form-control" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Holder Name</label>
+        <input formControlName="holderName" class="form-control" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input formControlName="phone" class="form-control" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input formControlName="email" class="form-control" />
+      </div>
+
+      <!-- NEW: Date of Birth -->
+      <div class="col-md-6">
+        <label class="form-label">Date of Birth</label>
+        <input formControlName="dob" type="date" class="form-control" />
+      </div>
+
+      <!-- NEW: Gender -->
+      <div class="col-md-6">
+        <label class="form-label">Gender</label>
+        <select formControlName="gender" class="form-select">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
+          <option value="OTHER">Other</option>
+        </select>
+      </div>
+
+      <!-- NEW: Aadhar Number -->
+      <div class="col-md-6">
+        <label class="form-label">Aadhar Number</label>
+        <input formControlName="aadharNumber" class="form-control" maxlength="12" />
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Account Type</label>
+        <select formControlName="accountType" class="form-select">
+          <option value="SAVINGS">Savings</option>
+          <option value="CURRENT">Current</option>
+          <option value="STUDENT">Student</option>
+          <option value="SALARY">Salary</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Initial Deposit</label>
+        <input formControlName="initialDeposit" class="form-control" type="number" />
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary">Open Account</button>
+      </div>
+    </form>
+  </div>
+</div>
+    <!-- Deposit -->
+    <div *ngIf="tab==='deposit'" class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Deposit</h5>
+        <form [formGroup]="depositForm" (ngSubmit)="deposit()" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Account Number</label>
+            <input formControlName="accountNumber" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Amount</label>
+            <input formControlName="amount" type="number" class="form-control" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Remarks</label>
+            <input formControlName="remarks" class="form-control" />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary">Deposit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Withdraw -->
+    <div *ngIf="tab==='withdraw'" class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Withdraw</h5>
+        <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Account Number</label>
+            <input formControlName="accountNumber" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Amount</label>
+            <input formControlName="amount" type="number" class="form-control" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Remarks</label>
+            <input formControlName="remarks" class="form-control" />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary">Withdraw</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Transfer -->
+    <div *ngIf="tab==='transfer'" class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Transfer</h5>
+        <form [formGroup]="transferForm" (ngSubmit)="transfer()" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">From Account</label>
+            <input formControlName="fromAccount" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">To Account</label>
+            <input formControlName="toAccount" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Amount</label>
+            <input formControlName="amount" type="number" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Remarks</label>
+            <input formControlName="remarks" class="form-control" />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-primary">Transfer</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Accounts (NO My Requests block here) -->
+    <div *ngIf="tab==='accounts'">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Accounts</h5>
+          <div class="table-responsive">
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Holder</th>
+                  <th>Account</th>
+                  <th class="text-end">Balance (₹)</th>
+                  <th>Updated</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of accounts; let i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ a.holderName }}</td>
+                  <td>{{ a.accountNumber }}</td>
+                  <td class="text-end">{{ a.balance | number:'1.2-2' }}</td>
+                  <td>{{ a.updatedAt | date:'short' }}</td>
+                </tr>
+                <tr *ngIf="accounts.length === 0">
+                  <td colspan="5" class="text-center text-muted">No accounts yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div *ngIf="tab==='history'" class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Transaction History</h5>
+        <div class="table-responsive">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Account</th>
+                <th>To Account</th>
+                <th class="text-end">Amount (₹)</th>
+                <th>Remarks</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let t of txns; let i=index">
+                <td>{{ i+1 }}</td>
+                <td>{{ ($any(t).dateTime || $any(t).date) | date:'short' }}</td>
+                <td>{{ t.accountNumber }}</td>
+                <td>{{ $any(t).toAccountNumber || '-' }}</td>
+                <td class="text-end">{{ t.amount | number:'1.2-2' }}</td>
+                <td>{{ t.remarks }}</td>
+              </tr>
+              <tr *ngIf="txns.length===0">
+                <td colspan="6" class="text-center text-muted">No transactions yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- Employee block -->
+<ng-template #employeeBlock>
+  <div class="container py-5">
+    <div class="alert alert-info shadow-sm">
+      You are logged in as <strong>Employee</strong>. Customer dashboard is hidden.
+      Go to <a routerLink="/employee/requests" class="alert-link">Employee Requests</a>.
+    </div>
+  </div>
+</ng-template>

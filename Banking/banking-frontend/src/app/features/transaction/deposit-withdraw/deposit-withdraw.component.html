@@ -1,0 +1,30 @@
+<div class="container py-4">
+  <h4 class="mb-3">Deposit / Withdraw</h4>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label class="form-label">Type</label>
+        <select class="form-select" formControlName="type">
+          <option value="DEPOSIT">Deposit</option>
+          <option value="WITHDRAW">Withdraw</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Account Number</label>
+        <input class="form-control" formControlName="accountNumber" />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-control" formControlName="amount" />
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Remarks</label>
+        <input class="form-control" formControlName="remarks" />
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-3" [disabled]="processing">Submit</button>
+    <a class="btn btn-outline-secondary mt-3 ms-2" routerLink="/dashboard">Back</a>
+  </form>
+</div>

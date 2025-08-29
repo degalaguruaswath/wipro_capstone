@@ -1,0 +1,16 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg" style="width:100%;max-width:28rem">
+    <div class="card-body p-4">
+      <h1 class="h4 text-center mb-4">Create an account</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vstack gap-3">
+        <div><label class="form-label">Username</label><input class="form-control" formControlName="username" /></div>
+        <div><label class="form-label">Password</label><input type="password" class="form-control" formControlName="password" /></div>
+        <div><label class="form-label">Confirm Password</label><input type="password" class="form-control" formControlName="confirm" /></div>
+        <div *ngIf="error" class="alert alert-danger py-2">{{ error }}</div>
+        <div *ngIf="success" class="alert alert-success py-2">{{ success }}</div>
+        <button class="btn btn-primary w-100">Create account</button>
+        <p class="text-center small mt-2">Already have an account? <a routerLink="/auth/login">Sign in</a></p>
+      </form>
+    </div>
+  </div>
+</div>

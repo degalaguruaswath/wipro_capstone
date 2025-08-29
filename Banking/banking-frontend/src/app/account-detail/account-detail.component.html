@@ -1,0 +1,17 @@
+<div *ngIf="loading">Loading…</div>
+
+<div *ngIf="error" class="alert alert-danger">
+  {{ error }}
+</div>
+
+<div *ngIf="account as a">
+  <h3>Account {{ a.account_no }}</h3>
+  <p><strong>Name:</strong> {{ a.name }}</p>
+  <p><strong>User ID:</strong> {{ a.user_id }}</p>
+  <p><strong>DOB:</strong> {{ a.dob || '-' }}</p>
+  <p><strong>Gender:</strong> {{ a.gender || '-' }}</p>
+  <p><strong>Aadhar:</strong> {{ a.aadhar || '-' }}</p>
+  <p><strong>Phone:</strong> {{ a.phone || '-' }}</p>
+  <p><strong>Email:</strong> {{ a.email || '-' }}</p>
+  <p><strong>Balance:</strong> {{ a.balance | number:'1.2-2' }}</p>
+</div>

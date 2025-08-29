@@ -1,0 +1,6 @@
+/* Global styles */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+/* Your custom tweaks */
+body { background-color: #f6f7fb; }

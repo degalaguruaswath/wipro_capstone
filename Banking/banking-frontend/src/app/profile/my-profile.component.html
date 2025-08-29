@@ -1,0 +1,151 @@
+<div class="container py-4">
+
+  <!-- Back to Dashboard + Refresh -->
+  <div class="mb-3 d-flex justify-content-between align-items-center">
+    <a routerLink="/dashboard" class="btn btn-outline-primary btn-sm">
+      ← Back to Dashboard
+    </a>
+    <button class="btn btn-sm btn-secondary" (click)="refresh()">Refresh</button>
+  </div>
+
+  <!-- My Accounts (Account creation details) -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title">My Accounts</h5>
+
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Holder</th>
+              <th>Account</th>
+              <th class="text-end">Balance (₹)</th>
+              <th>Opened / Updated</th>
+              <th>Status</th>
+              <th style="width: 1%"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of myAccounts; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ a.holderName }}</td>
+              <td>{{ a.accountNumber }}</td>
+              <td class="text-end">{{ a.balance | number:'1.2-2' }}</td>
+              <td>{{ ($any(a).updatedAt || $any(a).openedDate) ? (($any(a).updatedAt || $any(a).openedDate) | date:'short') : '-' }}</td>
+              <td>
+                <span class="badge"
+                      [ngClass]="{
+                        'bg-success': $any(a).isActive !== false,
+                        'bg-secondary': $any(a).isActive === false
+                      }">
+                  {{ $any(a).isActive === false ? 'Inactive' : 'Active' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary" (click)="startEdit(a)">Edit</button>
+              </td>
+            </tr>
+            <tr *ngIf="myAccounts.length === 0">
+              <td colspan="7" class="text-center text-muted py-3">No accounts found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Edit Modal (simple in-page modal) -->
+      <div class="modal fade show" tabindex="-1" role="dialog" style="display:block; background:rgba(0,0,0,.35);" *ngIf="isEditing">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Edit Account Details</h5>
+              <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="editForm" class="vstack gap-3">
+                <div>
+                  <label class="form-label">Account Number</label>
+                  <input class="form-control" [value]="editingAccNo" disabled />
+                </div>
+
+                <div>
+                  <label class="form-label">Phone</label>
+                  <input formControlName="phone" class="form-control" maxlength="10" />
+                  <div class="text-danger small" *ngIf="editForm.controls.phone.invalid && editForm.controls.phone.touched">
+                    Enter a valid 10-digit phone number.
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label">Email</label>
+                  <input formControlName="email" class="form-control" />
+                  <div class="text-danger small" *ngIf="editForm.controls.email.invalid && editForm.controls.email.touched">
+                    Enter a valid email.
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label">Date of Birth</label>
+                  <input formControlName="dob" type="date" class="form-control" />
+                </div>
+
+                <div class="alert alert-info mb-0">
+                  <strong>Note:</strong> Account Number and Balance cannot be edited.
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-light" (click)="cancelEdit()">Cancel</button>
+              <button class="btn btn-primary" (click)="saveEdit()" [disabled]="editForm.invalid">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Edit Modal -->
+
+    </div>
+  </div>
+
+  <!-- My Requests -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">My Requests</h5>
+
+      <div class="table-responsive">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Created</th>
+              <th>Status</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let r of myRequests">
+              <td class="text-capitalize">{{ r.kind }}</td>
+              <td>{{ r.createdAt | date:'short' }}</td>
+              <td>
+                <span class="badge"
+                      [ngClass]="{
+                        'bg-warning text-dark': r.status==='PENDING',
+                        'bg-success':           r.status==='APPROVED' || r.status==='ACCEPTED',
+                        'bg-danger':            r.status==='REJECTED',
+                        'bg-secondary':         r.status==='HOLD'
+                      }">
+                  {{ r.status }}
+                </span>
+              </td>
+              <td><code class="small">{{ r.details | json }}</code></td>
+            </tr>
+            <tr *ngIf="myRequests.length === 0">
+              <td colspan="4" class="text-center text-muted py-3">No requests yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</div>

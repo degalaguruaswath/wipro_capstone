@@ -1,0 +1,48 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Apply for Investment</h3>
+    <button class="btn btn-outline-secondary" (click)="back()">Back to Home</button>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form (ngSubmit)="submit()" #f="ngForm">
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label">Amount (₹)</label>
+            <input type="number" class="form-control" [(ngModel)]="model.amount" name="amount" required min="1" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Term (months)</label>
+            <input type="number" class="form-control" [(ngModel)]="model.termMonths" name="termMonths" min="1" />
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Investment Type</label>
+            <select class="form-select" [(ngModel)]="model.plan" name="plan" required>
+              <option value="" disabled selected>Select investment type</option>
+              <option value="Fixed Deposit (FD)">Fixed Deposit (FD)</option>
+              <option value="Recurring Deposit (RD)">Recurring Deposit (RD)</option>
+              <option value="Mutual Fund - Equity">Mutual Fund - Equity</option>
+              <option value="Mutual Fund - Debt">Mutual Fund - Debt</option>
+              <option value="Mutual Fund - Hybrid">Mutual Fund - Hybrid</option>
+              <option value="Public Provident Fund (PPF)">Public Provident Fund (PPF)</option>
+              <option value="National Pension System (NPS)">National Pension System (NPS)</option>
+              <option value="Sovereign Gold Bond (SGB)">Sovereign Gold Bond (SGB)</option>
+              <option value="Gold ETF">Gold ETF</option>
+              <option value="Government Securities (G-Sec)">Government Securities (G-Sec)</option>
+            </select>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Notes</label>
+            <textarea class="form-control" [(ngModel)]="model.notes" name="notes"></textarea>
+          </div>
+        </div>
+
+        <button class="btn btn-primary mt-3" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

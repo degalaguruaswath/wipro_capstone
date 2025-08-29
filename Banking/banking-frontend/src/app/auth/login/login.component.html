@@ -1,0 +1,21 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-lg" style="width:100%;max-width:28rem">
+    <div class="card-body p-4">
+      <div class="text-center mb-3">
+        <div class="rounded-circle border shadow-sm mx-auto" style="width:72px;height:72px;background:#e9ecef;display:flex;align-items:center;justify-content:center;">
+          <span class="bi bi-person" style="font-size:1.5rem"></span>
+        </div>
+      </div>
+      <h1 class="h4 text-center mb-4">User Login</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="vstack gap-3">
+        <div><label class="form-label">Username</label>
+          <input class="form-control" formControlName="username" placeholder="Enter username" autocomplete="username"></div>
+        <div><label class="form-label">Password</label>
+          <input type="password" class="form-control" formControlName="password" placeholder="Enter password" autocomplete="current-password"></div>
+        <div *ngIf="error" class="alert alert-danger py-2">{{ error }}</div>
+        <button type="submit" class="btn btn-primary w-100">{{ loading ? 'Signing in…' : 'Login' }}</button>
+      </form>
+      <p class="text-center mt-3 small">Don't have an account? <a routerLink="/auth/register">Register here</a></p>
+    </div>
+  </div>
+</div>

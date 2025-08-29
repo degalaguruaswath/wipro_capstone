@@ -1,0 +1,76 @@
+/* Blue header like image 2 */
+.dash-header {
+  background: #0d6efd;
+  color: #fff;
+  padding: 14px 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+.dash-header .brand {
+  font-size: 22px;
+  font-weight: 700;
+}
+.dash-header .welcome {
+  opacity: .95;
+}
+
+/* Primary pill buttons row */
+.pill-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 12px 16px;
+  border: 2px solid #0d6efd;
+  color: #0d6efd;
+  background: #f8fbff;
+  border-radius: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .15s ease;
+}
+.pill-btn:hover {
+  background: #eaf2ff;
+}
+.pill-btn.secondary {
+  border-color: #6c757d;
+  color: #6c757d;
+  background: #fcfcfc;
+}
+.pill-btn.secondary:hover {
+  background: #f2f2f2;
+}
+
+/* Secondary operation tabs */
+.op-tabs {
+  display: flex;
+  gap: 18px;
+  padding: 10px 0 16px;
+  margin: 0;
+  list-style: none;
+  border-bottom: 1px solid #e9ecef;
+}
+.op-tabs li button {
+  background: transparent;
+  border: none;
+  color: #0d6efd;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.op-tabs li button.active {
+  background: #0d6efd;
+  color: #fff;
+}
+
+/* Cards and tables */
+.card-title {
+  margin-bottom: 14px;
+  font-weight: 700;
+}
+.table code.small {
+  color: #c2185b;
+}
+
+/* Make buttons stretch in small screens */
+@media (max-width: 767px) {
+  .pill-btn { width: 100%; }
+  .op-tabs { flex-wrap: wrap; gap: 10px; }
+}

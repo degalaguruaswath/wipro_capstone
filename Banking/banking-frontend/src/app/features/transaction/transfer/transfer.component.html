@@ -1,0 +1,27 @@
+<div class="container py-4">
+  <h4 class="mb-3">Transfer</h4>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">From Account</label>
+        <input class="form-control" formControlName="fromAccount" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">To Account</label>
+        <input class="form-control" formControlName="toAccount" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-control" formControlName="amount" />
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Remarks</label>
+        <input class="form-control" formControlName="remarks" />
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-3" [disabled]="processing">Transfer</button>
+    <a class="btn btn-outline-secondary mt-3 ms-2" routerLink="/dashboard">Back</a>
+  </form>
+</div>
